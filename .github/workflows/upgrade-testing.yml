@@ -25,7 +25,7 @@ jobs:
   # - Downloads and installs an earlier version of WordPress.
   # - Upgrades to the new version of WordPress.
 #  upgrade-tests-4x-php-7x:
-#    name: ${{ matrix.wp }} to ${{ inputs.new_version && inputs.new_version || 'latest' }}
+#    name: ${{ matrix.wp }} to ${{ inputs.new_version && inputs.new_version || 'latest' }} - PHP ${{ matrix.php }}
 #    uses: desrosj/wordpress-upgrade-tester/.github/workflows/upgrade-testing-run.yml@one-workflow-all-update-testing
 #    permissions:
 #      contents: read
@@ -71,7 +71,7 @@ jobs:
       multisite: ${{ matrix.multisite }}
 #
 #  upgrade-tests-5x-php-7x:
-#    name: ${{ matrix.wp }} to ${{ inputs.new_version && inputs.new_version || 'latest' }}
+#    name: ${{ matrix.wp }} to ${{ inputs.new_version && inputs.new_version || 'latest' }} - PHP ${{ matrix.php }}
 #    uses: desrosj/wordpress-upgrade-tester/.github/workflows/upgrade-testing-run.yml@one-workflow-all-update-testing
 #    permissions:
 #      contents: read
@@ -94,7 +94,7 @@ jobs:
 #      multisite: ${{ matrix.multisite }}
 #
 #  upgrade-tests-5x-php-8x:
-#    name: ${{ matrix.wp }} to ${{ inputs.new_version && inputs.new_version || 'latest' }}
+#    name: ${{ matrix.wp }} to ${{ inputs.new_version && inputs.new_version || 'latest' }} - PHP ${{ matrix.php }}
 #    uses: desrosj/wordpress-upgrade-tester/.github/workflows/upgrade-testing-run.yml@one-workflow-all-update-testing
 #    permissions:
 #      contents: read
@@ -117,7 +117,7 @@ jobs:
 #      multisite: ${{ matrix.multisite }}
 #
 #  upgrade-tests-6x-php:
-#    name: ${{ matrix.wp }} to ${{ inputs.new_version && inputs.new_version || 'latest' }}
+#    name: ${{ matrix.wp }} to ${{ inputs.new_version && inputs.new_version || 'latest' }} - PHP ${{ matrix.php }}
 #    uses: desrosj/wordpress-upgrade-tester/.github/workflows/upgrade-testing-run.yml@one-workflow-all-update-testing
 #    permissions:
 #      contents: read
