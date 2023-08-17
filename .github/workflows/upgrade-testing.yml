@@ -1,4 +1,4 @@
-name: Upgrade Tests (WP 4.x - Single site)
+name: Upgrade Tests
 
 on:
   push:
