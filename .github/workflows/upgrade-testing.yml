@@ -26,7 +26,7 @@ jobs:
   # - Downloads and installs an earlier version of WordPress.
   # - Upgrades to the new version of WordPress.
   upgrade-tests-4x-php-7x:
-    name: ${{ matrix.wp }} ${{ matrix.multisite && 'multisite ' }}to ${{ inputs.new_version }} on PHP ${{ matrix.php }} / MySQL ${{ matrix.mysql }}
+    name: ${{ matrix.wp }} ${{ matrix.multisite && 'multisite ' || '' }}to ${{ inputs.new_version }} on PHP ${{ matrix.php }} / MySQL ${{ matrix.mysql }}
     permissions:
       contents: read
     runs-on: ubuntu-latest
