@@ -44,8 +44,12 @@ jobs:
   # Performs the following steps:
   # - Checks out the repository.
   # - Sets up PHP.
-  # - Starts the MySQL server.
-  # - Installs the new version of WordPress.
+  # - Starts the database server.
+  # - Downloads the specified version of WordPress.
+  # - Creates a `wp-config.php` file.
+  # - Installs WordPress.
+  # - Updates to the latest minor version.
+  # - Updates to the version of WordPres being tested.
   upgrade-tests:
     name: ${{ inputs.wp }} to ${{ inputs.new-version && inputs.new-version || 'latest' }} / PHP ${{ inputs.php }} with ${{ 'mariadb' == inputs.db-type && 'MariaDB' || 'MySQL' }} ${{ inputs.db-version }}${{ inputs.multisite && ' multisite' || '' }}
     runs-on: ${{ inputs.os }}
@@ -69,7 +73,7 @@ jobs:
           coverage: none
           tools: wp-cli
 
-      - name: Start the MySQL server
+      - name: Start the database server
         run: |
           sudo systemctl start ${{ inputs.db-type }}
 
