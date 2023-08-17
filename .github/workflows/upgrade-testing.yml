@@ -48,7 +48,7 @@ jobs:
 #      multisite: ${{ matrix.multisite }}
 
   upgrade-tests-4x-php-8x:
-    name: ${{ matrix.wp }} to ${{ inputs.new_version && inputs.new_version || 'latest' }}
+    name: ${{ matrix.wp }} to ${{ inputs.new_version && inputs.new_version || 'latest' }} - PHP ${{ matrix.php }}
     uses: desrosj/wordpress-upgrade-tester/.github/workflows/upgrade-testing-run.yml@one-workflow-all-update-testing
     permissions:
       contents: read
