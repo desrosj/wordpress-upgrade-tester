@@ -46,8 +46,8 @@ jobs:
   # - Sets up PHP.
   # - Starts the MySQL server.
   # - Installs the new version of WordPress.
-  phpunit-tests:
-    name: ${{ inputs.wp }}${{ inputs.multisite && ' multisite' || '' }} to ${{ inputs.new-version && inputs.new-version || 'latest' }} on PHP ${{ inputs.php }} / ${{ 'mariadb' == inputs.db-type && 'MariaDB' || 'MySQL' }} ${{ inputs.db-version }}
+  upgrade-tests:
+    name: ${{ inputs.wp }} to ${{ inputs.new-version && inputs.new-version || 'latest' }} / PHP ${{ inputs.php }} / ${{ 'mariadb' == inputs.db-type && 'MariaDB' || 'MySQL' }} ${{ inputs.db-version }}
     runs-on: ${{ inputs.os }}
     timeout-minutes: 20
 
