@@ -52,7 +52,7 @@ jobs:
     timeout-minutes: 20
 
     services:
-      mysql:
+      database:
         image: mysql:${{ inputs.db-version }}
         ports:
           - 3306
@@ -77,7 +77,7 @@ jobs:
         run: wp core download --version=${{ inputs.wp }}
 
       - name: Create wp-config.php file
-        run: wp config create --dbname=test_db --dbuser=root --dbpass=root --dbhost=127.0.0.1:${{ job.services.mysql.ports['3306'] }}
+        run: wp config create --dbname=test_db --dbuser=root --dbpass=root --dbhost=127.0.0.1:${{ job.services.database.ports['3306'] }}
 
       - name: Install WordPress
         run: wp core ${{ inputs.multisite && 'multisite-' || '' }}install --url=http://localhost/ --title="Upgrade Test" --admin_user=admin --admin_password=password --admin_email=me@example.org --skip-email
