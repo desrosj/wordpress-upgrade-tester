@@ -171,7 +171,7 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       actions: write
-    needs: [ upgrade-tests-wp-6x, upgrade-tests-wp-5x-php-7x, upgrade-tests-wp-5x-php-8x, upgrade-tests-wp-4x-php-7x, upgrade-tests-wp-4x-php-8x, slack-notifications ]
+    needs: [ slack-notifications ]
     if: |
       always() &&
       github.repository == 'WordPress/wordpress-develop' &&
