@@ -38,7 +38,7 @@ jobs:
   # - Sets up PHP.
   # - Downloads and installs an earlier version of WordPress.
   # - Upgrades to the new version of WordPress.
-  upgrade-tests-wp-6x-php:
+  upgrade-tests-wp-6x:
     name: ${{ matrix.wp }} to ${{ inputs.new_version && inputs.new_version || 'latest' }}
     uses: desrosj/wordpress-upgrade-tester/.github/workflows/upgrade-testing-run.yml@one-workflow-all-update-testing
     if: ${{ github.repository == 'WordPress/wordpress-develop' || github.event_name == 'pull_request' }}
