@@ -36,7 +36,7 @@ jobs:
   upgrade-tests-wp-6x-mysql:
     name: ${{ matrix.wp }} to ${{ inputs.new_version && inputs.new_version || 'latest' }}
     uses: desrosj/wordpress-upgrade-tester/.github/workflows/upgrade-testing-run.yml@one-workflow-all-update-testing
-    if: ${{ false }}
+    if: ${{ github.repository == 'WordPress/wordpress-develop' || github.event_name == 'pull_request' }}
     permissions:
       contents: read
     strategy:
@@ -58,39 +58,12 @@ jobs:
       multisite: ${{ matrix.multisite }}
 
   #
-  # Spawns upgrade testing for WordPress 6.x versions with mariadb.
-  #
-  upgrade-tests-wp-6x-mariadb:
-    name: ${{ matrix.wp }} to ${{ inputs.new_version && inputs.new_version || 'latest' }}
-    uses: desrosj/wordpress-upgrade-tester/.github/workflows/upgrade-testing-run.yml@one-workflow-all-update-testing
-    if: ${{ github.repository == 'WordPress/wordpress-develop' || github.event_name == 'pull_request' }}
-    permissions:
-      contents: read
-    strategy:
-      fail-fast: false
-      matrix:
-        os: [ 'ubuntu-latest' ]
-        php: [ '7.0', '7.1', '7.2', '7.3', '7.4', '8.0', '8.1', '8.2' ]
-        db-type: [ 'mariadb' ]
-        db-version: [ '10.4', '10.6', '10.11', '11.0' ]
-        wp: [ '6.0', '6.1', '6.2' ]
-        multisite: [ false, true ]
-    with:
-      os: ${{ matrix.os }}
-      php: ${{ matrix.php }}
-      db-type: ${{ matrix.db-type }}
-      db-version: ${{ matrix.db-version }}
-      wp: ${{ matrix.wp }}
-      new-version: ${{ inputs.new_version && inputs.new_version || '' }}
-      multisite: ${{ matrix.multisite }}
-
-  #
   # Spawns upgrade testing for WordPress 5.x versions on PHP 7.x with MySQL.
   #
   upgrade-tests-wp-5x-php-7x-mysql:
     name: ${{ matrix.wp }} to ${{ inputs.new_version && inputs.new_version || 'latest' }}
     uses: desrosj/wordpress-upgrade-tester/.github/workflows/upgrade-testing-run.yml@one-workflow-all-update-testing
-    if: ${{ false }}
+    if: ${{ github.repository == 'WordPress/wordpress-develop' || github.event_name == 'pull_request' }}
     strategy:
       fail-fast: false
       matrix:
@@ -119,7 +92,7 @@ jobs:
   upgrade-tests-wp-5x-php-8x-mysql:
     name: ${{ matrix.wp }} to ${{ inputs.new_version && inputs.new_version || 'latest' }}
     uses: desrosj/wordpress-upgrade-tester/.github/workflows/upgrade-testing-run.yml@one-workflow-all-update-testing
-    if: ${{ false }}
+    if: ${{ github.repository == 'WordPress/wordpress-develop' || github.event_name == 'pull_request' }}
     strategy:
       fail-fast: false
       matrix:
@@ -144,7 +117,7 @@ jobs:
   upgrade-tests-wp-4x-php-7x-mysql:
     name: ${{ matrix.wp }} to ${{ inputs.new_version && inputs.new_version || 'latest' }}
     uses: desrosj/wordpress-upgrade-tester/.github/workflows/upgrade-testing-run.yml@one-workflow-all-update-testing
-    if: ${{ false }}
+    if: ${{ github.repository == 'WordPress/wordpress-develop' || github.event_name == 'pull_request' }}
     strategy:
       fail-fast: false
       matrix:
@@ -173,7 +146,7 @@ jobs:
   upgrade-tests-wp-4x-php-8x-mysql:
     name: ${{ matrix.wp }} to ${{ inputs.new_version && inputs.new_version || 'latest' }}
     uses: desrosj/wordpress-upgrade-tester/.github/workflows/upgrade-testing-run.yml@one-workflow-all-update-testing
-    if: ${{ false }}
+    if: ${{ github.repository == 'WordPress/wordpress-develop' || github.event_name == 'pull_request' }}
     strategy:
       fail-fast: false
       matrix:
