@@ -1,5 +1,5 @@
 ##
-# A callable workflow that runs WordPress upgrade testing.
+# A callable workflow that runs WordPress upgrade testing under the conditions provided.
 ##
 name: Upgrade Tests
 
@@ -47,7 +47,7 @@ jobs:
   # - Starts the MySQL server.
   # - Installs the new version of WordPress.
   upgrade-tests:
-    name: ${{ inputs.wp }} to ${{ inputs.new-version && inputs.new-version || 'latest' }} / PHP ${{ inputs.php }} / ${{ 'mariadb' == inputs.db-type && 'MariaDB' || 'MySQL' }} ${{ inputs.db-version }}${{ inputs.multisite && ' multisite' || '' }}
+    name: ${{ inputs.wp }} to ${{ inputs.new-version && inputs.new-version || 'latest' }} / PHP ${{ inputs.php }} with ${{ 'mariadb' == inputs.db-type && 'MariaDB' || 'MySQL' }} ${{ inputs.db-version }}${{ inputs.multisite && ' multisite' || '' }}
     runs-on: ${{ inputs.os }}
     timeout-minutes: 20
 
