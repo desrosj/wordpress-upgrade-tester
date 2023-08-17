@@ -8,6 +8,10 @@ on:
     paths:
       - '.github/workflows/upgrade-testing.yml'
       - '.github/workflows/upgrade-testing-run.yml'
+  pull_request:
+    paths:
+      - '.github/workflows/upgrade-testing.yml'
+      - '.github/workflows/upgrade-testing-run.yml'
   workflow_dispatch:
     inputs:
       new-version:
