@@ -24,7 +24,7 @@ jobs:
   # - Sets up PHP.
   # - Downloads and installs an earlier version of WordPress.
   # - Upgrades to the new version of WordPress.
-#  upgrade-tests-4x-php-7x:
+#  upgrade-tests-wp-6x-php:
 #    name: ${{ matrix.wp }} to ${{ inputs.new_version && inputs.new_version || 'latest' }} - PHP ${{ matrix.php }}
 #    uses: desrosj/wordpress-upgrade-tester/.github/workflows/upgrade-testing-run.yml@one-workflow-all-update-testing
 #    permissions:
@@ -33,10 +33,10 @@ jobs:
 #      fail-fast: false
 #      matrix:
 #        os: [ 'ubuntu-latest' ]
-#        php: [ '7.0', '7.1', '7.2', '7.3', '7.4' ]
+#        php: [ '7.0', '7.1', '7.2', '7.3', '7.4', '8.0', '8.1', '8.2' ]
 #        db-type: [ 'mysql' ]
 #        db-version: [ '5.7', '8.0' ]
-#        wp: [ '4.1', '4.2', '4.3', '4.4', '4.5', '4.6', '4.7', '4.8', '4.9' ]
+#        wp: [ '6.0', '6.1', '6.2' ]
 #        multisite: [ false, true ]
 #    with:
 #      os: ${{ matrix.os }}
@@ -47,30 +47,7 @@ jobs:
 #      new-version: ${{ inputs.new_version && inputs.new_version || '' }}
 #      multisite: ${{ matrix.multisite }}
 
-  upgrade-tests-4x-php-8x:
-    name: ${{ matrix.wp }} to ${{ inputs.new_version && inputs.new_version || 'latest' }}
-    uses: desrosj/wordpress-upgrade-tester/.github/workflows/upgrade-testing-run.yml@one-workflow-all-update-testing
-    permissions:
-      contents: read
-    strategy:
-      fail-fast: false
-      matrix:
-        os: [ 'ubuntu-latest' ]
-        php: [ '8.0', '8.1', '8.2' ]
-        db-type: [ 'mysql' ]
-        db-version: [ '5.7', '8.0' ]
-        wp: [ '4.1', '4.2', '4.3', '4.4', '4.5' ]
-        multisite: [ false, true ]
-    with:
-      os: ${{ matrix.os }}
-      php: ${{ matrix.php }}
-      db-type: ${{ matrix.db-type }}
-      db-version: ${{ matrix.db-version }}
-      wp: ${{ matrix.wp }}
-      new-version: ${{ inputs.new_version && inputs.new_version || '' }}
-      multisite: ${{ matrix.multisite }}
-#
-#  upgrade-tests-5x-php-7x:
+#  upgrade-tests-wp-5x-php-7x:
 #    name: ${{ matrix.wp }} to ${{ inputs.new_version && inputs.new_version || 'latest' }} - PHP ${{ matrix.php }}
 #    uses: desrosj/wordpress-upgrade-tester/.github/workflows/upgrade-testing-run.yml@one-workflow-all-update-testing
 #    permissions:
@@ -93,7 +70,7 @@ jobs:
 #      new-version: ${{ inputs.new_version && inputs.new_version || '' }}
 #      multisite: ${{ matrix.multisite }}
 #
-#  upgrade-tests-5x-php-8x:
+#  upgrade-tests-wp-5x-php-8x:
 #    name: ${{ matrix.wp }} to ${{ inputs.new_version && inputs.new_version || 'latest' }} - PHP ${{ matrix.php }}
 #    uses: desrosj/wordpress-upgrade-tester/.github/workflows/upgrade-testing-run.yml@one-workflow-all-update-testing
 #    permissions:
@@ -116,7 +93,7 @@ jobs:
 #      new-version: ${{ inputs.new_version && inputs.new_version || '' }}
 #      multisite: ${{ matrix.multisite }}
 #
-#  upgrade-tests-6x-php:
+#  upgrade-tests-wp-4x-php-7x:
 #    name: ${{ matrix.wp }} to ${{ inputs.new_version && inputs.new_version || 'latest' }} - PHP ${{ matrix.php }}
 #    uses: desrosj/wordpress-upgrade-tester/.github/workflows/upgrade-testing-run.yml@one-workflow-all-update-testing
 #    permissions:
@@ -125,10 +102,10 @@ jobs:
 #      fail-fast: false
 #      matrix:
 #        os: [ 'ubuntu-latest' ]
-#        php: [ '7.0', '7.1', '7.2', '7.3', '7.4', '8.0', '8.1', '8.2' ]
+#        php: [ '7.0', '7.1', '7.2', '7.3', '7.4' ]
 #        db-type: [ 'mysql' ]
 #        db-version: [ '5.7', '8.0' ]
-#        wp: [ '6.0', '6.1', '6.2' ]
+#        wp: [ '4.1', '4.2', '4.3', '4.4', '4.5', '4.6', '4.7', '4.8', '4.9' ]
 #        multisite: [ false, true ]
 #    with:
 #      os: ${{ matrix.os }}
@@ -138,3 +115,26 @@ jobs:
 #      wp: ${{ matrix.wp }}
 #      new-version: ${{ inputs.new_version && inputs.new_version || '' }}
 #      multisite: ${{ matrix.multisite }}
+
+  upgrade-tests-wp-4x-php-8x:
+    name: ${{ matrix.wp }}
+    uses: desrosj/wordpress-upgrade-tester/.github/workflows/upgrade-testing-run.yml@one-workflow-all-update-testing
+    permissions:
+      contents: read
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ 'ubuntu-latest' ]
+        php: [ '8.0', '8.1', '8.2' ]
+        db-type: [ 'mysql' ]
+        db-version: [ '5.7', '8.0' ]
+        wp: [ '4.1', '4.2', '4.3', '4.4', '4.5' ]
+        multisite: [ false, true ]
+    with:
+      os: ${{ matrix.os }}
+      php: ${{ matrix.php }}
+      db-type: ${{ matrix.db-type }}
+      db-version: ${{ matrix.db-version }}
+      wp: ${{ matrix.wp }}
+      new-version: ${{ inputs.new_version && inputs.new_version || '' }}
+      multisite: ${{ matrix.multisite }}
