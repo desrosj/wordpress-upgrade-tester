@@ -73,7 +73,7 @@ jobs:
           sudo systemctl start ${{ matrix.db-type }}
 
       - name: Download WordPress ${{ inputs.wp-version || '6.3' }}
-        run: wp core download ${{ inputs.wp-version && format( '--version={0}', inputs.wp-version ) || format( '--version={0}', inputs.db-version ) }}
+        run: wp core download ${{ inputs.wp-version && format( '--version={0}', inputs.wp-version ) || format( '--version={0}', matrix.db-version ) }}
       - name: Create wp-config.php file
         run: wp config create --dbname=test_db --dbuser=root --dbpass=root --dbhost=127.0.0.1:${{ job.services.database.ports['3306'] }}
 
