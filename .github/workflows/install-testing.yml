@@ -1,12 +1,20 @@
 name: Installation Tests
 
 on:
+  push:
+    # Always test the workflow after it's updated.
+    paths:
+      - '.github/workflows/install-testing.yml'
+  pull_request:
+    # Always test the workflow when changes are suggested.
+    paths:
+      - '.github/workflows/install-testing.yml'
   workflow_dispatch:
     inputs:
       new-version:
         description: 'The new version'
         type: string
-        required: true
+        default: '6.3'
 
 # Disable permissions for all available scopes by default.
 # Any needed permissions should be configured at the job level.
