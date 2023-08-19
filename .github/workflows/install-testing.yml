@@ -29,7 +29,7 @@ jobs:
   # - Starts the MySQL server.
   # - Installs the new version of WordPress.
   install-tests-mysql:
-    name: WP ${{ inputs.new-version }} / PHP ${{ matrix.php }} / ${{ 'mariadb' == inputs.db-type && 'MariaDB' || 'MySQL' }} ${{ inputs.db-version }}${{ inputs.multisite && ' multisite' || '' }}
+    name: WP ${{ inputs.new-version }} / PHP ${{ matrix.php }} / ${{ 'mariadb' == matrix.db-type && 'MariaDB' || 'MySQL' }} ${{ matrix.db-version }}${{ matrix.multisite && ' multisite' || '' }}
     permissions:
       contents: read
     runs-on: ubuntu-latest
