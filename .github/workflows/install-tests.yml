@@ -3,7 +3,7 @@ name: Installation Tests
 on:
   workflow_dispatch:
     inputs:
-      new_version:
+      new-version:
         description: 'The new version'
         type: string
         required: true
@@ -20,8 +20,8 @@ jobs:
   # - Sets up PHP.
   # - Starts the MySQL server.
   # - Installs the new version of WordPress.
-  install-tests:
-    name: WP ${{ inputs.new_version }}${{ matrix.multisite && ' (MS - Subdir)' || ''}} on PHP ${{ matrix.php }}, MySQL ${{ matrix.mysql }}
+  install-tests-mysql:
+    name: WP ${{ inputs.new-version }} / PHP ${{ matrix.php }} / ${{ 'mariadb' == inputs.db-type && 'MariaDB' || 'MySQL' }} ${{ inputs.db-version }}${{ inputs.multisite && ' multisite' || '' }}
     permissions:
       contents: read
     runs-on: ubuntu-latest
@@ -31,15 +31,16 @@ jobs:
       matrix:
         os: [ ubuntu-latest ]
         php: [ '7.0', '7.1', '7.2', '7.3', '7.4', '8.0', '8.1', '8.2' ]
-        mysql: [ '5.7', '8.0' ]
+        db-type: [ 'mysql' ]
+        db-version: [ '5.7', '8.0' ]
         multisite: [ false, true ]
 
     services:
-      mysql:
-        image: mysql:${{ matrix.mysql }}
+      database:
+        image: ${{ matrix.db-type }}:${{ matrix.db-version }}
         ports:
           - 3306
-        options: --health-cmd="mysqladmin ping" --health-interval=30s --health-timeout=10s --health-retries=5 -e MYSQL_ROOT_PASSWORD=root -e MYSQL_DATABASE=test_db --entrypoint sh mysql:${{ matrix.mysql }} -c "exec docker-entrypoint.sh mysqld --default-authentication-plugin=mysql_native_password"
+        options: --health-cmd="mysqladmin ping" --health-interval=30s --health-timeout=10s --health-retries=5 -e MYSQL_ROOT_PASSWORD=root -e MYSQL_DATABASE=test_db --entrypoint sh ${{ matrix.db-type }}:${{ matrix.db-version }} -c "exec docker-entrypoint.sh mysqld --default-authentication-plugin=mysql_native_password"
 
     steps:
       - name: Checkout the repository
@@ -52,12 +53,15 @@ jobs:
           coverage: none
           tools: wp-cli
 
-      - name: Start MySQL server
+      - name: Start the database server
         run: |
-          sudo systemctl start mysql
+          sudo systemctl start ${{ matrix.db-type }}
 
-      - name: Download and install WordPress ${{ inputs.new_version }}
-        run: |
-          wp core download --version=${{ inputs.new_version }}
-          wp config create --dbname=test_db --dbuser=root --dbpass=root --dbhost=127.0.0.1:${{ job.services.mysql.ports['3306'] }}
-          wp core ${{ matrix.multisite && 'multisite-install' || 'install' }} --url=http://localhost/ --title="Installation Test" --admin_user=admin --admin_password=password --admin_email=me@example.org --skip-email
+      - name: Download WordPress ${{ inputs.new-version }}
+        run: wp core download --version=${{ inputs.new-version }}
+
+      - name: Create wp-config.php file
+        run: wp config create --dbname=test_db --dbuser=root --dbpass=root --dbhost=127.0.0.1:${{ job.services.database.ports['3306'] }}
+
+      - name: Install WordPress
+        run: wp core ${{ matrix.multisite && 'multisite-' || '' }}install --url=http://localhost/ --title="Upgrade Test" --admin_user=admin --admin_password=password --admin_email=me@example.org --skip-email
