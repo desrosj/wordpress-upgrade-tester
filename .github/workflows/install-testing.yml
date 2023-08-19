@@ -11,7 +11,7 @@ on:
       - '.github/workflows/install-testing.yml'
   workflow_dispatch:
     inputs:
-      new-version:
+      wp-version:
         description: 'The new version'
         type: string
         default: 'latest'
@@ -36,7 +36,7 @@ jobs:
   # - Starts the MySQL server.
   # - Installs the new version of WordPress.
   install-tests-mysql:
-    name: WP ${{ inputs.new-version || '6.3' }} / PHP ${{ matrix.php }} / ${{ 'mariadb' == matrix.db-type && 'MariaDB' || 'MySQL' }} ${{ matrix.db-version }}${{ matrix.multisite && ' multisite' || '' }}
+    name: WP ${{ inputs.wp-version || '6.3' }} / PHP ${{ matrix.php }} / ${{ 'mariadb' == matrix.db-type && 'MariaDB' || 'MySQL' }} ${{ matrix.db-version }}${{ matrix.multisite && ' multisite' || '' }}
     permissions:
       contents: read
     runs-on: ubuntu-latest
@@ -72,9 +72,8 @@ jobs:
         run: |
           sudo systemctl start ${{ matrix.db-type }}
 
-      - name: Download WordPress ${{ inputs.new-version || '6.3' }}
-        run: wp core download ${{ inputs.new-version && '--version=inputs.new-version' || '--version=matrix.db-version' }}
-
+      - name: Download WordPress ${{ inputs.wp-version || '6.3' }}
+        run: wp core download ${{ inputs.wp-version && format( '--version={0}', inputs.wp-version ) || '' }}
       - name: Create wp-config.php file
         run: wp config create --dbname=test_db --dbuser=root --dbpass=root --dbhost=127.0.0.1:${{ job.services.database.ports['3306'] }}
 
